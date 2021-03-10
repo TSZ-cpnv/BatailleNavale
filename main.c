@@ -13,6 +13,91 @@ const int Bateaux [10][10] = {{1,1,1,0,0,0,0,0,0,0},
                               {0,1,0,0,0,0,0,0,0,0},
                               {0,1,0,0,0,0,0,0,0,0},
                               {0,0,0,0,0,0,0,0,0,0}};
+void grille(){
+//Déclaration de variable
+        int lettre=64;
+        //premier ligne
+        printf("╔");
+        for (int i = 0; i < 11; ++i) {
+            printf("═");
+            printf("═");
+            printf("═");
+            if (i!=10){
+                printf("╦");
+            }else{
+                printf("╗");
+            }
+
+        }
+
+
+        for (int j = 0; j < 11; ++j) {
+            printf("\n");
+            //2eme ligne
+            printf("║");
+            for (int i = 0; i < 11; ++i) {
+
+                if (j==0){
+                    if (i==10){          //enelve un espace a ka case num10
+                        printf(" ");
+                        printf("%d",i);
+
+                    }else if (i==0){    //fait que sa n affihce rien dans la 1er case
+                        printf(" ");
+                        printf(" ");
+                        printf(" ");
+                    }else{              //fait que le chiffre de 1 a 9 s'affiche a la 1er ligne
+                        printf(" ");
+                        printf("%d",i);
+                        printf(" ");
+                    }
+                } else{
+                    if (j>0 && i== 0){
+                        printf(" ");
+                        printf("%c",lettre);
+                        printf(" ");
+                    }else{
+                        printf(" ");
+                        printf("█");
+                        printf(" ");
+                    }
+
+                }
+
+
+                printf("║");
+            }
+            printf("\n");
+            //3eme ligne
+            if (j!=10){
+                printf("╠");
+                for (int i = 0; i < 11; ++i) {
+                    printf("═");
+                    printf("═");
+                    printf("═");
+                    if (i!=10){
+                        printf("╬");
+                    }else{
+                        printf("╣");
+                    }
+                }
+            }else{
+                printf("╚");
+                for (int i = 0; i < 11; ++i) {
+                    printf("═");
+                    printf("═");
+                    printf("═");
+                    if (i!=10){
+                        printf("╩");
+                    }else{
+                        printf("╝");
+                    }
+                }
+            }
+            ++lettre;
+        }
+        printf("\n");
+};
 
 
 /*
@@ -96,7 +181,7 @@ int main() {
 
         case 1:
 
-
+            grille();
             verifieSiToucher(demandeUneCaseHorizontal(),demandeUneCaseVertical());
             system("pause");
 
