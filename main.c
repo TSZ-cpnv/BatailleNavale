@@ -3,101 +3,114 @@
 #include <windows.h>
 
 
-const int Bateaux [10][10] = {{1,1,1,0,0,0,0,0,0,0},
-                              {0,0,0,0,0,0,0,0,0,0},
-                              {0,0,0,0,0,0,0,0,0,0},
-                              {0,0,1,1,0,0,0,0,0,0},
-                              {0,0,0,0,0,0,0,0,0,0},
-                              {0,0,0,0,0,0,0,0,0,0},
-                              {0,0,0,0,0,0,0,0,0,0},
-                              {0,1,0,0,0,0,0,0,0,0},
-                              {0,1,0,0,0,0,0,0,0,0},
-                              {0,0,0,0,0,0,0,0,0,0}};
-void grille(){
-//Déclaration de variable
-        int lettre=64;
-        //premier ligne
-        printf("╔");
-        for (int i = 0; i < 11; ++i) {
-            printf("═");
-            printf("═");
-            printf("═");
-            if (i!=10){
-                printf("╦");
-            }else{
-                printf("╗");
-            }
+const int bateaux [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
+                              {0,1,1,1,0,0,0,0,0,0,0},
+                              {0,0,0,0,0,0,0,0,0,0,0},
+                              {0,0,0,0,0,0,0,0,0,0,0},
+                              {0,0,0,1,0,0,0,1,0,0,0},
+                              {0,0,0,1,0,0,0,1,0,0,0},
+                              {0,0,0,1,0,0,0,1,0,0,0},
+                              {0,0,0,0,0,0,0,0,0,0,0},
+                              {0,0,0,0,0,0,0,0,0,0,0},
+                              {0,0,0,0,0,0,0,0,0,0,0},
+                              {0,0,0,0,0,0,0,0,0,0,0}};
 
+
+void grille(int x,int y,int tableauBateauxToucher[11][11]){
+//Déclaration de variable
+
+    int lettre=64;
+
+
+
+    //premier ligne
+    printf("╔");
+    for (int i = 0; i < 11; ++i) {
+        printf("═");
+        printf("═");
+        printf("═");
+        if (i!=10){
+            printf("╦");
+        }else{
+            printf("╗");
         }
 
+    }
 
-        for (int j = 0; j < 11; ++j) {
-            printf("\n");
-            //2eme ligne
+
+    for (int j = 0; j < 11; ++j) {
+        printf("\n");
+        //2eme ligne
+        printf("║");
+        for (int i = 0; i < 11; ++i) {
+
+            if (j==0){
+                if (i==10){          //enelve un espace a ka case num10
+                    printf(" ");
+                    printf("%d",i);
+
+                }else if (i==0){    //fait que sa n affihce rien dans la 1er case
+                    printf(" ");
+                    printf(" ");
+                    printf(" ");
+                }else{              //fait que le chiffre de 1 a 9 s'affiche a la 1er ligne
+                    printf(" ");
+                    printf("%d",i);
+                    printf(" ");
+                }
+            } else{
+                if (j>0 && i== 0){
+                    printf(" ");
+                    printf("%c",lettre);
+                    printf(" ");
+                }else if (tableauBateauxToucher[j][i]==2){
+                    printf(" ");
+                    printf("x");
+                    printf(" ");
+                }else{
+                    printf(" ");
+                    printf("█");
+                    printf(" ");
+                }
+
+            }
+
+
             printf("║");
-            for (int i = 0; i < 11; ++i) {
-
-                if (j==0){
-                    if (i==10){          //enelve un espace a ka case num10
-                        printf(" ");
-                        printf("%d",i);
-
-                    }else if (i==0){    //fait que sa n affihce rien dans la 1er case
-                        printf(" ");
-                        printf(" ");
-                        printf(" ");
-                    }else{              //fait que le chiffre de 1 a 9 s'affiche a la 1er ligne
-                        printf(" ");
-                        printf("%d",i);
-                        printf(" ");
-                    }
-                } else{
-                    if (j>0 && i== 0){
-                        printf(" ");
-                        printf("%c",lettre);
-                        printf(" ");
-                    }else{
-                        printf(" ");
-                        printf("█");
-                        printf(" ");
-                    }
-
-                }
-
-
-                printf("║");
-            }
-            printf("\n");
-            //3eme ligne
-            if (j!=10){
-                printf("╠");
-                for (int i = 0; i < 11; ++i) {
-                    printf("═");
-                    printf("═");
-                    printf("═");
-                    if (i!=10){
-                        printf("╬");
-                    }else{
-                        printf("╣");
-                    }
-                }
-            }else{
-                printf("╚");
-                for (int i = 0; i < 11; ++i) {
-                    printf("═");
-                    printf("═");
-                    printf("═");
-                    if (i!=10){
-                        printf("╩");
-                    }else{
-                        printf("╝");
-                    }
-                }
-            }
-            ++lettre;
         }
         printf("\n");
+        //3eme ligne
+        if (j!=10){
+            printf("╠");
+            for (int i = 0; i < 11; ++i) {
+                printf("═");
+                printf("═");
+                printf("═");
+                if (i!=10){
+                    printf("╬");
+                }else{
+                    printf("╣");
+                }
+            }
+        }else{
+            printf("╚");
+            for (int i = 0; i < 11; ++i) {
+                printf("═");
+                printf("═");
+                printf("═");
+                if (i!=10){
+                    printf("╩");
+                }else{
+                    printf("╝");
+                }
+            }
+        }
+        ++lettre;
+    }
+    printf("\n");
+
 };
+
 
 
 /*
@@ -145,22 +158,31 @@ int demandeUneCaseVertical(){
     int chiffreV;
     printf("\nchoisisez une case (Exemple : 1-4 (1 = vertical))");
     printf("\nVertical: ");
-    scanf("%s",&chiffreV);
+    scanf("%d",&chiffreV);
     return chiffreV;
 };
 int demandeUneCaseHorizontal(){
     int chiffreH;
     printf("\nchoisisez une case (Exemple : 1-4 (4 = horizontal))");
     printf("\nHorizontal : ");
-    scanf("%s",&chiffreH);
+    scanf("%d",&chiffreH);
     return chiffreH;
 }
 
-void verifieSiToucher(int x,int y){
-    if (Bateaux[y-49][x-49]==1){
-        printf("\ntoucher");
+int verifieSiToucher(int x,int y,int bateauxToucher){
+
+    if (bateaux[x][y]==2){
+        printf("\nDeja toucher\n");
+        return  bateauxToucher;
+    }
+    else if (bateaux[x][y]==1){
+        printf("\ntoucher\n");
+        return  ++bateauxToucher;
+
+
     }else{
-        printf("y a rien");
+        printf("\ny a rien\n");
+        return  bateauxToucher;
     }
 }
 
@@ -169,23 +191,39 @@ void verifieSiToucher(int x,int y){
 
 int main() {
     SetConsoleOutputCP(65001);
-
+    //declaration de variable
+    int bateauxToucher=0;
+    int horizontal=0;
+    int vertical=0;
+    int tableauBateauxToucher [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0}};
 
     menu();
-
-
-
     switch (choixDuMenu()) {
         case 0:
             return 0;
 
         case 1:
 
-            grille();
-            verifieSiToucher(demandeUneCaseHorizontal(),demandeUneCaseVertical());
-            system("pause");
+            do {
+                tableauBateauxToucher[horizontal][vertical]=2;
+                grille(horizontal,vertical,tableauBateauxToucher);
+                horizontal=demandeUneCaseHorizontal();
+                vertical=demandeUneCaseVertical();
+                bateauxToucher=verifieSiToucher(horizontal,vertical,bateauxToucher);
+            }while (bateauxToucher<5);
+            printf("\n\nGAGNER\n\n");
 
-            //y aura le jeux
+            system("pause");
             break;
 
         case 2 :
