@@ -63,9 +63,13 @@ void grille(int x,int y,int tableauBateauxToucher[11][11]){
                     printf(" ");
                     printf("%c",lettre);
                     printf(" ");
-                }else if (tableauBateauxToucher[j][i]==2){
+                }else if (tableauBateauxToucher[j][i]==2&&bateaux[j][i]==0){
                     printf(" ");
                     printf("x");
+                    printf(" ");
+                } else if (tableauBateauxToucher[j][i]==2&&bateaux[j][i]==1){
+                    printf(" ");
+                    printf("O");
                     printf(" ");
                 }else{
                     printf(" ");
@@ -171,11 +175,11 @@ int demandeUneCaseHorizontal(){
 
 int verifieSiToucher(int x,int y,int bateauxToucher){
 
-    if (bateaux[x][y]==2){
+    if (bateaux[y][x]==2){
         printf("\nDeja toucher\n");
         return  bateauxToucher;
     }
-    else if (bateaux[x][y]==1){
+    else if (bateaux[y][x]==1){
         printf("\ntoucher\n");
         return  ++bateauxToucher;
 
@@ -215,10 +219,10 @@ int main() {
         case 1:
 
             do {
-                tableauBateauxToucher[horizontal][vertical]=2;
+                tableauBateauxToucher[vertical][horizontal]=2;
                 grille(horizontal,vertical,tableauBateauxToucher);
-                horizontal=demandeUneCaseHorizontal();
                 vertical=demandeUneCaseVertical();
+                horizontal=demandeUneCaseHorizontal();
                 bateauxToucher=verifieSiToucher(horizontal,vertical,bateauxToucher);
             }while (bateauxToucher<5);
             printf("\n\nGAGNER\n\n");
