@@ -175,11 +175,12 @@ void Regle(){
 
 
 int demandeUneCaseVertical(){
-    int chiffreV;
+    char chiffreV;
     printf("\nchoisisez une case (Exemple : 1-4 (1 = vertical))");
+    fflush(stdin);
     printf("\nVertical: ");
-    scanf("%d",&chiffreV);
-    return chiffreV;
+    scanf("%c",&chiffreV);
+    return (chiffreV-64);
 };
 int demandeUneCaseHorizontal(){
     int chiffreH;
@@ -217,7 +218,7 @@ int main() {
     //declaration de variable
     int bateauxToucher=0;
     int horizontal=0;
-    int vertical=0;
+    char vertical=0;
     int tableauBateauxToucher [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
                                           {0,0,0,0,0,0,0,0,0,0,0},
                                           {0,0,0,0,0,0,0,0,0,0,0},
