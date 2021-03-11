@@ -24,6 +24,7 @@ void grille(int x,int y,int tableauBateauxToucher[11][11]){
 
 
     //premier ligne
+    system("cls");
     printf("╔");
     for (int i = 0; i < 11; ++i) {
         printf("═");
@@ -188,19 +189,22 @@ int demandeUneCaseHorizontal(){
     return chiffreH;
 }
 
-int verifieSiToucher(int x,int y,int bateauxToucher){
+int verifieSiToucher(int x,int y,int bateauxToucher,int tableauBateauxToucher[11][11]){
 
-    if (bateaux[y][x]==2){
+    if (tableauBateauxToucher[y][x]==2){
         printf("\nDeja toucher\n");
+        system("pause");
         return  bateauxToucher;
     }
     else if (bateaux[y][x]==1){
         printf("\ntoucher\n");
+        system("pause");
         return  ++bateauxToucher;
 
 
     }else{
         printf("\ny a rien\n");
+        system("pause");
         return  bateauxToucher;
     }
 }
@@ -238,7 +242,7 @@ int main() {
                 grille(horizontal,vertical,tableauBateauxToucher);
                 vertical=demandeUneCaseVertical();
                 horizontal=demandeUneCaseHorizontal();
-                bateauxToucher=verifieSiToucher(horizontal,vertical,bateauxToucher);
+                bateauxToucher=verifieSiToucher(horizontal,vertical,bateauxToucher,tableauBateauxToucher);
             }while (bateauxToucher<5);
             printf("\n\nGAGNER\n\n");
 
