@@ -64,16 +64,22 @@ void grille(int x,int y,int tableauBateauxToucher[11][11]){
                     printf("%c",lettre);
                     printf(" ");
                 }else if (tableauBateauxToucher[j][i]==2&&bateaux[j][i]==0){
+                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
                     printf(" ");
-                    printf("x");
+                    printf("█");
+                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
                     printf(" ");
                 } else if (tableauBateauxToucher[j][i]==2&&bateaux[j][i]==1){
                     printf(" ");
-                    printf("O");
+                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+                    printf("█");
+                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
                     printf(" ");
                 }else{
                     printf(" ");
+                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
                     printf("█");
+                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
                     printf(" ");
                 }
 
@@ -149,10 +155,19 @@ void Regle(){
     printf("\nVous aurez une grille de 10 sur 10 et vous devrez choisir une case");
     printf("\nUne fois une case choisit, le programme lancera un boulet dessus et vous redira si il y a vait un beateau ou non");
     printf("\n\nPoint important :\n");
-    printf("\nles casse s'afficheron comme ceci : A");
+    printf("\nles casse s'afficheron comme ceci : ");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+    printf("█");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
     printf("\n\nUne fois une case touchée elle pourra s'afficher de 2 façon :\n\n");
-    printf("Si il y avait quelque chose sur la case : B\n");
-    printf("Si il n'y avait rien sur la case : C");
+    printf("Si il y avait un bateau sur la case : ");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+    printf("█");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+    printf("\nSi il n'y avait rien sur la case : ");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
+    printf("█");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
     printf("\n\nLe jeux se terminera une fois tout les bateau coullé");
 
 };
