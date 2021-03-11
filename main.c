@@ -176,17 +176,23 @@ void Regle(){
 
 int demandeUneCaseVertical(){
     char chiffreV;
-    printf("\nchoisisez une case (Exemple : 1-4 (1 = vertical))");
+    printf("\nchoisisez une case (Exemple : A4 (A = vertical, la lettre doit être en majuscule)");
     fflush(stdin);
     printf("\nVertical: ");
-    scanf("%c",&chiffreV);
-    return (chiffreV-64);
+    do {
+        scanf("%c",&chiffreV);
+        chiffreV=chiffreV-64;
+    }while (chiffreV<1 || chiffreV>10);
+    return chiffreV;
 };
 int demandeUneCaseHorizontal(){
     int chiffreH;
-    printf("\nchoisisez une case (Exemple : 1-4 (4 = horizontal))");
+    printf("\nchoisisez une case (Exemple : A4 (4 = horizontal))");
     printf("\nHorizontal : ");
-    scanf("%d",&chiffreH);
+    do{
+        scanf("%d",&chiffreH);
+    }while (chiffreH<1 || chiffreH>10);
+
     return chiffreH;
 }
 
