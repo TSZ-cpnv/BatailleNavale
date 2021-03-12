@@ -175,56 +175,74 @@ void Regle(){
 
 
 int demandeUneCaseVertical(){
-    char chiffreV;
+    char lettre;
+    int chiffre;
     printf("\nchoisisez une case (Exemple : A4 (A = vertical, la lettre doit être en majuscule)");
-    fflush(stdin);
+
     printf("\nVertical: ");
-    do {
-        scanf("%c",&chiffreV);
-        chiffreV=chiffreV-64;
-    }while (chiffreV<1 || chiffreV>10);
-    return chiffreV;
+    fflush(stdin);
+    scanf("%c",&lettre);
+
+        chiffre=lettre-64;
+
+    return chiffre;
 };
 int demandeUneCaseHorizontal(){
     int chiffreH;
     printf("\nchoisisez une case (Exemple : A4 (4 = horizontal))");
     printf("\nHorizontal : ");
-    do{
-        scanf("%d",&chiffreH);
-    }while (chiffreH<1 || chiffreH>10);
+    fflush(stdin);
+    scanf("%d",&chiffreH);
+
+
 
     return chiffreH;
 }
 
 int verifieSiToucher(int x,int y,int bateauxToucher,int tableauBateauxToucher[11][11]){
 
-    if (tableauBateauxToucher[y][x]==2){
+    if (x<1 || x>10 || y<1 || y>10){
+        printf("coordonée invalide");
+        fflush(stdin);
+        return  bateauxToucher;
+    }
+    else if (tableauBateauxToucher[y][x]==2){
         printf("\nDeja toucher\n");
+        fflush(stdin);
         system("pause");
         return  bateauxToucher;
     }
     else if (bateaux[y][x]==1){
         printf("\ntoucher\n");
+        fflush(stdin);
+        tableauBateauxToucher[y][x]=2;
         system("pause");
         return  ++bateauxToucher;
 
 
     }else{
         printf("\ny a rien\n");
+        fflush(stdin);
+        tableauBateauxToucher[y][x]=2;
         system("pause");
         return  bateauxToucher;
     }
+
+
+
+
 }
 
 
 
 
 int main() {
+    setbuf(stdout,0);
     SetConsoleOutputCP(65001);
     //declaration de variable
     int bateauxToucher=0;
     int horizontal=0;
-    char vertical=0;
+    int vertical=0;
     int tableauBateauxToucher [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
                                           {0,0,0,0,0,0,0,0,0,0,0},
                                           {0,0,0,0,0,0,0,0,0,0,0},
@@ -237,6 +255,7 @@ int main() {
                                           {0,0,0,0,0,0,0,0,0,0,0},
                                           {0,0,0,0,0,0,0,0,0,0,0}};
 
+
     menu();
     switch (choixDuMenu()) {
         case 0:
@@ -245,7 +264,7 @@ int main() {
         case 1:
 
             do {
-                tableauBateauxToucher[vertical][horizontal]=2;
+
                 grille(horizontal,vertical,tableauBateauxToucher);
                 vertical=demandeUneCaseVertical();
                 horizontal=demandeUneCaseHorizontal();
