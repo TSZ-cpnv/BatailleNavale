@@ -4,27 +4,34 @@
 
 
 const int bateaux [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
-                              {0,1,1,1,0,0,0,0,0,0,0},
-                              {0,0,0,0,0,0,0,0,0,0,0},
-                              {0,0,0,0,0,0,0,0,0,0,0},
-                              {0,0,0,1,0,0,0,1,0,0,0},
-                              {0,0,0,1,0,0,0,1,0,0,0},
-                              {0,0,0,1,0,0,0,1,0,0,0},
-                              {0,0,0,0,0,0,0,0,0,0,0},
-                              {0,0,0,0,0,0,0,0,0,0,0},
-                              {0,0,0,0,0,0,0,0,0,0,0},
+                              {0,0,1,0,0,0,0,0,0,0,0},
+                              {0,0,1,0,0,0,0,0,0,0,0},
+                              {0,0,1,0,0,0,0,0,0,0,0},
+                              {0,0,0,0,0,0,0,0,1,0,0},
+                              {0,0,1,1,0,0,0,0,1,0,0},
+                              {0,0,0,0,0,0,0,0,1,0,0},
+                              {0,0,1,0,0,0,0,0,1,0,0},
+                              {0,0,1,0,0,0,0,0,0,0,0},
+                              {0,0,1,1,1,1,1,1,0,0,0},
                               {0,0,0,0,0,0,0,0,0,0,0}};
 
 
 void grille(int x,int y,int tableauBateauxToucher[11][11]){
 //Déclaration de variable
-
     int lettre=64;
 
-
-
-    //premier ligne
     system("cls");
+    //premier ligne
+    printf("-------------------Légende------------------");
+    printf("\n\nToucher un bateau = ");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+    printf("█");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+    printf("\n\nPlouf = ");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
+    printf("█\n\n");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+
     printf("╔");
     for (int i = 0; i < 11; ++i) {
         printf("═");
@@ -35,10 +42,7 @@ void grille(int x,int y,int tableauBateauxToucher[11][11]){
         }else{
             printf("╗");
         }
-
     }
-
-
     for (int j = 0; j < 11; ++j) {
         printf("\n");
         //2eme ligne
@@ -83,10 +87,7 @@ void grille(int x,int y,int tableauBateauxToucher[11][11]){
                     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
                     printf(" ");
                 }
-
             }
-
-
             printf("║");
         }
         printf("\n");
@@ -119,14 +120,9 @@ void grille(int x,int y,int tableauBateauxToucher[11][11]){
         ++lettre;
     }
     printf("\n");
-
 };
 
 
-
-/*
-*
-*/
 void menu()
 {
     printf("0 - Quitter le programme");
@@ -134,9 +130,7 @@ void menu()
     printf("\n2 - Règle\n\n");
 }
 
-/*
-*
-*/
+
 int choixDuMenu()
 {
     //Déclaration variable
@@ -148,11 +142,12 @@ int choixDuMenu()
         scanf("%d",&choix);
     } while (choix>3);
     return choix;
-
 }
 
+
 void Regle(){
-    printf("\nLes regles de la bataille navale :\n");
+    system("cls");
+    printf("Les regles de la bataille navale :\n");
     printf("\nVous aurez une grille de 10 sur 10 et vous devrez choisir une case");
     printf("\nUne fois une case choisit, le programme lancera un boulet dessus et vous redira si il y a vait un beateau ou non");
     printf("\n\nPoint important :\n");
@@ -169,7 +164,7 @@ void Regle(){
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
     printf("█");
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-    printf("\n\nLe jeux se terminera une fois tout les bateau coullé");
+    printf("\n\nLe jeux se terminera une fois tout les bateau seront coullé\n\n");
 
 };
 
@@ -177,7 +172,7 @@ void Regle(){
 int demandeUneCaseVertical(){
     char lettre;
     int chiffre;
-    printf("\nchoisisez une case (Exemple : A4 (A = vertical, la lettre doit être en majuscule)");
+    printf("\nchoisisez une case (A-J)");
 
     printf("\nVertical: ");
     fflush(stdin);
@@ -187,57 +182,47 @@ int demandeUneCaseVertical(){
 
     return chiffre;
 };
+
+
 int demandeUneCaseHorizontal(){
     int chiffreH;
-    printf("\nchoisisez une case (Exemple : A4 (4 = horizontal))");
+    printf("\nchoisisez une case (1-10)");
     printf("\nHorizontal : ");
     fflush(stdin);
     scanf("%d",&chiffreH);
-
-
-
     return chiffreH;
 }
 
-int verifieSiToucher(int x,int y,int bateauxToucher,int tableauBateauxToucher[11][11]){
 
+int verifieSiToucher(int x,int y,int bateauxToucher,int tableauBateauxToucher[11][11]){
     if (x<1 || x>10 || y<1 || y>10){
-        printf("coordonée invalide");
-        fflush(stdin);
+        printf("\ncoordonée invalide\n\n");
+        system("pause");
         return  bateauxToucher;
     }
     else if (tableauBateauxToucher[y][x]==2){
-        printf("\nDeja toucher\n");
-        fflush(stdin);
+        printf("\nCette case est déja touché ^^\n\n");
         system("pause");
         return  bateauxToucher;
     }
     else if (bateaux[y][x]==1){
-        printf("\ntoucher\n");
-        fflush(stdin);
+        printf("\nToucher ^^\n\n");
         tableauBateauxToucher[y][x]=2;
         system("pause");
         return  ++bateauxToucher;
-
-
     }else{
-        printf("\ny a rien\n");
-        fflush(stdin);
+        printf("\nPlouf ^^\n\n");
         tableauBateauxToucher[y][x]=2;
         system("pause");
         return  bateauxToucher;
     }
-
-
-
-
 }
 
 
 
 
 int main() {
-    setbuf(stdout,0);
+    //setbuf(stdout,0);
     SetConsoleOutputCP(65001);
     //declaration de variable
     int bateauxToucher=0;
@@ -269,8 +254,7 @@ int main() {
                 vertical=demandeUneCaseVertical();
                 horizontal=demandeUneCaseHorizontal();
                 bateauxToucher=verifieSiToucher(horizontal,vertical,bateauxToucher,tableauBateauxToucher);
-            }while (bateauxToucher<5);
-            printf("\n\nGAGNER\n\n");
+            }while (bateauxToucher!=17);
 
             system("pause");
             break;
