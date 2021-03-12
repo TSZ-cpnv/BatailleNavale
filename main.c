@@ -69,8 +69,8 @@ void grille(int x,int y,int tableauBateauxToucher[11][11]){
                     printf("%c",lettre);
                     printf(" ");
                 }else if (tableauBateauxToucher[j][i]==2&&bateaux[j][i]==0){
-                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
                     printf(" ");
+                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
                     printf("█");
                     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
                     printf(" ");
@@ -228,6 +228,7 @@ void gagner(){
 
 int main() {
     //setbuf(stdout,0);
+    system("mode con: cols=122 lines=35");
     SetConsoleOutputCP(65001);
     //declaration de variable
     int bateauxToucher=0;
