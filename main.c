@@ -218,6 +218,11 @@ int verifieSiToucher(int x,int y,int bateauxToucher,int tableauBateauxToucher[11
     }
 }
 
+void gagner(){
+    system("cls");
+    printf("Vous avez gagner, BRAVO !!!\n\n");
+}
+
 
 
 
@@ -226,6 +231,7 @@ int main() {
     SetConsoleOutputCP(65001);
     //declaration de variable
     int bateauxToucher=0;
+    int choix;
     int horizontal=0;
     int vertical=0;
     int tableauBateauxToucher [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
@@ -240,31 +246,34 @@ int main() {
                                           {0,0,0,0,0,0,0,0,0,0,0},
                                           {0,0,0,0,0,0,0,0,0,0,0}};
 
+    do {
+        system("cls");
+        menu();
+        choix = choixDuMenu();
+        switch (choix) {
+            case 0:
+                return 0;
 
-    menu();
-    switch (choixDuMenu()) {
-        case 0:
-            return 0;
+            case 1:
 
-        case 1:
+                do {
 
-            do {
+                    grille(horizontal, vertical, tableauBateauxToucher);
+                    vertical = demandeUneCaseVertical();
+                    horizontal = demandeUneCaseHorizontal();
+                    bateauxToucher = verifieSiToucher(horizontal, vertical, bateauxToucher, tableauBateauxToucher);
+                } while (bateauxToucher != 17);
+                gagner();
 
-                grille(horizontal,vertical,tableauBateauxToucher);
-                vertical=demandeUneCaseVertical();
-                horizontal=demandeUneCaseHorizontal();
-                bateauxToucher=verifieSiToucher(horizontal,vertical,bateauxToucher,tableauBateauxToucher);
-            }while (bateauxToucher!=17);
+                system("pause");
+                break;
 
-            system("pause");
-            break;
+            case 2 :
+                Regle();
 
-        case 2 :
-            Regle();
-
-            system("pause");
-            break;
-
-    }
+                system("pause");
+                break;
+        }
+    }while (choix!=0);
 
 }
