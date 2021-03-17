@@ -137,10 +137,8 @@ int choixDuMenu()
     int choix;
 
     //Demande a l'utilisateur son choix
-    do{
         printf("Veuillez choisir :");
         scanf("%d",&choix);
-    } while (choix>3);
     return choix;
 }
 
@@ -232,7 +230,7 @@ int main() {
     SetConsoleOutputCP(65001);
     //declaration de variable
     int bateauxToucher=0;
-    int choix;
+    int choix = 0;
     int horizontal=0;
     int vertical=0;
     int tableauBateauxToucher [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
@@ -251,30 +249,38 @@ int main() {
         system("cls");
         menu();
         choix = choixDuMenu();
+
+
         switch (choix) {
-            case 0:
+                case 0:
+                    return 0;
+
+                case 1:
+
+                    do {
+
+                        grille(horizontal, vertical, tableauBateauxToucher);
+                        vertical = demandeUneCaseVertical();
+                        horizontal = demandeUneCaseHorizontal();
+                        bateauxToucher = verifieSiToucher(horizontal, vertical, bateauxToucher, tableauBateauxToucher);
+                    } while (bateauxToucher != 17);
+                    gagner();
+
+                    system("pause");
+                    break;
+
+                case 2 :
+                    Regle();
+
+                    system("pause");
+                    break;
+            default :
                 return 0;
-
-            case 1:
-
-                do {
-
-                    grille(horizontal, vertical, tableauBateauxToucher);
-                    vertical = demandeUneCaseVertical();
-                    horizontal = demandeUneCaseHorizontal();
-                    bateauxToucher = verifieSiToucher(horizontal, vertical, bateauxToucher, tableauBateauxToucher);
-                } while (bateauxToucher != 17);
-                gagner();
-
-                system("pause");
-                break;
-
-            case 2 :
-                Regle();
-
-                system("pause");
-                break;
+            }
         }
-    }while (choix!=0);
+        while (choix != 0);
+
+
+
 
 }
