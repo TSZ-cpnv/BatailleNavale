@@ -3,20 +3,10 @@
 #include <windows.h>
 
 
-const int bateaux [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
-                              {0,0,1,0,0,0,0,0,0,0,0},
-                              {0,0,1,0,0,0,0,0,0,0,0},
-                              {0,0,1,0,0,0,0,0,0,0,0},
-                              {0,0,0,0,0,0,0,0,1,0,0},
-                              {0,0,1,1,0,0,0,0,1,0,0},
-                              {0,0,0,0,0,0,0,0,1,0,0},
-                              {0,0,1,0,0,0,0,0,1,0,0},
-                              {0,0,1,0,0,0,0,0,0,0,0},
-                              {0,0,1,1,1,1,1,1,0,0,0},
-                              {0,0,0,0,0,0,0,0,0,0,0}};
 
 
-void grille(int x,int y,int tableauBateauxToucher[11][11]){
+
+void grille(int x,int y,int tableauBateauxToucher[11][11],int bateaux[11][11]){
 //Déclaration de variable
     int lettre=64;
 
@@ -146,8 +136,9 @@ int choixDuMenu()
 void Regle(){
     system("cls");
     printf("Les regles de la bataille navale :\n");
-    printf("\nVous aurez une grille de 10 sur 10 et vous devrez choisir une case");
-    printf("\nUne fois une case choisit, le programme lancera un boulet dessus et vous redira si il y a vait un beateau ou non");
+    printf("\nVous aurez une grille de 10 sur 10 et vous devrez choisir une case.");
+    printf("\nUne fois une case choisit, le programme lancera un boulet dessus et vous redira si il y a vait un beateau ou non.");
+    printf("\n Si vous toucher un bateaux, il vous raportera 100 points, si vous toucher rien, vous persez 10point.");
     printf("\n\nPoint important :\n");
     printf("\nles casse s'afficheron comme ceci : ");
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
@@ -192,7 +183,7 @@ int demandeUneCaseHorizontal(){
 }
 
 
-int verifieSiToucher(int x,int y,int bateauxToucher,int tableauBateauxToucher[11][11]){
+int verifieSiToucher(int x,int y,int bateauxToucher,int tableauBateauxToucher[11][11],int bateaux[11][11]){
     if (x<1 || x>10 || y<1 || y>10){
         printf("\ncoordonée invalide\n\n");
         system("pause");
@@ -221,6 +212,19 @@ void gagner(){
     printf("Vous avez gagner, BRAVO !!!\n\n");
 }
 
+int CalculeScore(int score,int bateauToucher[11][11],int bateaux[11][11]){
+
+    for (int j = 0; j < 11; ++j) {
+        for (int i = 0; i < 11; ++i) {
+            if (bateauToucher[j][i]==2 && bateaux[j][i]==1){
+                score=(score+100);
+            }else if(bateauToucher[j][i]==2 && bateaux[j][i]==0){
+                score=(score-10);
+            }
+        }
+    }
+    return score;
+}
 
 
 
@@ -233,6 +237,7 @@ int main() {
     int choix = 0;
     int horizontal=0;
     int vertical=0;
+    int score=0;
     int tableauBateauxToucher [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
                                           {0,0,0,0,0,0,0,0,0,0,0},
                                           {0,0,0,0,0,0,0,0,0,0,0},
@@ -244,6 +249,17 @@ int main() {
                                           {0,0,0,0,0,0,0,0,0,0,0},
                                           {0,0,0,0,0,0,0,0,0,0,0},
                                           {0,0,0,0,0,0,0,0,0,0,0}};
+    int bateaux [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
+                            {0,0,1,0,0,0,0,0,0,0,0},
+                            {0,0,1,0,0,0,0,0,0,0,0},
+                            {0,0,1,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,1,0,0},
+                            {0,0,1,1,0,0,0,0,1,0,0},
+                            {0,0,0,0,0,0,0,0,1,0,0},
+                            {0,0,1,0,0,0,0,0,1,0,0},
+                            {0,0,1,0,0,0,0,0,0,0,0},
+                            {0,0,1,1,1,1,1,1,0,0,0},
+                            {0,0,0,0,0,0,0,0,0,0,0}};
 
     do {
         system("cls");
@@ -259,12 +275,14 @@ int main() {
 
                     do {
 
-                        grille(horizontal, vertical, tableauBateauxToucher);
+                        grille(horizontal, vertical, tableauBateauxToucher,bateaux);
                         vertical = demandeUneCaseVertical();
                         horizontal = demandeUneCaseHorizontal();
-                        bateauxToucher = verifieSiToucher(horizontal, vertical, bateauxToucher, tableauBateauxToucher);
+                        bateauxToucher = verifieSiToucher(horizontal, vertical, bateauxToucher, tableauBateauxToucher,bateaux);
                     } while (bateauxToucher != 17);
+                    score=CalculeScore(score, tableauBateauxToucher,bateaux);
                     gagner();
+                    printf("%d",score);
 
                     system("pause");
                     break;
