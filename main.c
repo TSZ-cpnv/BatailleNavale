@@ -226,6 +226,17 @@ int CalculeScore(int score,int bateauToucher[11][11],int bateaux[11][11]){
     return score;
 }
 
+int reinitialiseLeTableau(int tableauToucher[11][11]){
+    for (int j = 0; j < 11; ++j) {
+        for (int i = 0; i < 11; ++i) {
+            tableauToucher[i][j]=0;
+        }
+    }
+    return tableauToucher;
+}
+
+
+
 
 
 int main() {
@@ -238,17 +249,7 @@ int main() {
     int horizontal=0;
     int vertical=0;
     int score=0;
-    int tableauBateauxToucher [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0}};
+
     int bateaux [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
                             {0,0,1,0,0,0,0,0,0,0,0},
                             {0,0,1,0,0,0,0,0,0,0,0},
@@ -260,6 +261,17 @@ int main() {
                             {0,0,1,0,0,0,0,0,0,0,0},
                             {0,0,1,1,1,1,1,1,0,0,0},
                             {0,0,0,0,0,0,0,0,0,0,0}};
+    int tableauBateauxToucher [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0},
+                                          {0,0,0,0,0,0,0,0,0,0,0}};
 
     do {
         system("cls");
@@ -282,7 +294,7 @@ int main() {
                     } while (bateauxToucher != 17);
                     score=CalculeScore(score, tableauBateauxToucher,bateaux);
                     gagner();
-                    printf("%d",score);
+                    tableauBateauxToucher[11][11]=reinitialiseLeTableau(tableauBateauxToucher);
 
                     system("pause");
                     break;
