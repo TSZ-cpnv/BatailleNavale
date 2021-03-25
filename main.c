@@ -235,6 +235,22 @@ int reinitialiseLeTableau(int tableauToucher[11][11]){
     return tableauToucher;
 }
 
+void enregistrementDuScore(int scoreNombre){
+    char score[150];
+
+    FILE* fp;
+    fp = fopen("Score/Score.txt","a");
+    sprintf(score,"%d\n",scoreNombre);
+    if (fp == NULL)
+    {
+        printf("\nLe dossier n'est pas trouvable\n");
+        system("pause");
+        return;
+    }
+    fputs(score,fp);
+    fclose(fp);
+}
+
 
 
 
@@ -291,9 +307,10 @@ int main() {
                         vertical = demandeUneCaseVertical();
                         horizontal = demandeUneCaseHorizontal();
                         bateauxToucher = verifieSiToucher(horizontal, vertical, bateauxToucher, tableauBateauxToucher,bateaux);
-                    } while (bateauxToucher != 17);
+                    } while (bateauxToucher != 2);
                     score=CalculeScore(score, tableauBateauxToucher,bateaux);
                     gagner();
+                    enregistrementDuScore(score);
                     tableauBateauxToucher[11][11]=reinitialiseLeTableau(tableauBateauxToucher);
 
                     system("pause");
