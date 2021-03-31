@@ -254,10 +254,18 @@ void enregistrementDuScore(int scoreNombre){
 }
 
 void demandePseudo(){
-    system("cls");
-    printf("Entrer votre pseudo :\n");
-    printf("Votre psuedo : ");
-    scanf("%s",&pseudo);
+    int verification;
+    do {
+        system("cls");
+        printf("Entrer votre pseudo :\n");
+        printf("Votre psuedo : ");
+        scanf("%s",&pseudo);
+        fflush(stdin);
+        printf("\n\nVotre pseudo est %s, Etes vous sur (O/N)\n\n",pseudo);
+        scanf("%c",&verification);
+        fflush(stdin);
+    } while (verification!=79);
+
 }
 
 
