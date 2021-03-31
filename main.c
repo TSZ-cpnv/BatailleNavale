@@ -119,7 +119,9 @@ void menu()
 {
     printf("0 - Quitter le programme");
     printf("\n1 - Jouer");
-    printf("\n2 - Règle\n\n");
+    printf("\n2 - Règle");
+    printf("\n3 - Tableau des scores");
+    printf("\n4 - Autentification\n\n");
 }
 
 
