@@ -239,7 +239,7 @@ int reinitialiseLeTableau(int tableauToucher[11][11]){
     return tableauToucher[11][11];
 }
 
-void enregistrementDuScore(int scoreNombre){
+void enregistrementDuScoreEtPseudo(int scoreNombre){
     char score[150];
 
     FILE* fp;
@@ -268,6 +268,13 @@ void demandePseudo(){
         fflush(stdin);
     } while (verification!=79);
 
+}
+
+void enTeteTableauScore(){
+    system("cls");
+
+    printf("\n                    Tableau des scores                   \n\n");
+    printf("---------------------------------------------------------\n\n");
 }
 
 
@@ -330,7 +337,7 @@ int main() {
                     } while (bateauxToucher != 2);
                     score=CalculeScore(score, tableauBateauxToucher,bateaux);
                     gagner();
-                    enregistrementDuScore(score);
+                    enregistrementDuScoreEtPseudo(score);
                     tableauBateauxToucher[11][11]=reinitialiseLeTableau(tableauBateauxToucher);
 
                     system("pause");
@@ -343,9 +350,12 @@ int main() {
                     break;
             case 3:
 
+                enTeteTableauScore();
+                system("pause");
                 break;
             case 4:
                 demandePseudo();
+
                 break;
             default :
                 return 0;
