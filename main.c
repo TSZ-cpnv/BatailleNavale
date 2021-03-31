@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <windows.h>
 
+const char pseudo[15];
+
 
 
 
@@ -232,7 +234,7 @@ int reinitialiseLeTableau(int tableauToucher[11][11]){
             tableauToucher[i][j]=0;
         }
     }
-    return tableauToucher;
+    return tableauToucher[11][11];
 }
 
 void enregistrementDuScore(int scoreNombre){
@@ -251,6 +253,13 @@ void enregistrementDuScore(int scoreNombre){
     fclose(fp);
 }
 
+void demandePseudo(){
+    system("cls");
+    printf("Entrer votre pseudo :\n");
+    printf("Votre psuedo : ");
+    scanf("%s",&pseudo);
+}
+
 
 
 
@@ -265,6 +274,7 @@ int main() {
     int horizontal=0;
     int vertical=0;
     int score=0;
+
 
     int bateaux [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
                             {0,0,1,0,0,0,0,0,0,0,0},
@@ -321,6 +331,12 @@ int main() {
 
                     system("pause");
                     break;
+            case 3:
+
+                break;
+            case 4:
+                demandePseudo();
+                break;
             default :
                 return 0;
             }
