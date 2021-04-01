@@ -1,3 +1,3 @@
-C:/SandBox/BatailleNavale/cmake-build-debug/CMakeFiles/BatailleNavale.dir
-C:/SandBox/BatailleNavale/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/SandBox/BatailleNavale/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Thomas Schwartz/Documents/GitHub/BatailleNavale/cmake-build-debug/CMakeFiles/BatailleNavale.dir
+C:/Users/Thomas Schwartz/Documents/GitHub/BatailleNavale/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Thomas Schwartz/Documents/GitHub/BatailleNavale/cmake-build-debug/CMakeFiles/rebuild_cache.dir

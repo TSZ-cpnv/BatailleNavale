@@ -2,11 +2,7 @@
 #include <stdlib.h>
 #include <windows.h>
 
-const char pseudo[15];
-
-
-
-
+char pseudo[15]="Inconnu";
 
 void grille(int x,int y,int tableauBateauxToucher[11][11],int bateaux[11][11]){
 //Déclaration de variable
@@ -242,9 +238,10 @@ int reinitialiseLeTableau(int tableauToucher[11][11]){
 void enregistrementDuScoreEtPseudo(int scoreNombre){
     char score[150];
 
+
     FILE* fp;
     fp = fopen("Score/Score.txt","a");
-    sprintf(score,"%d\n",scoreNombre);
+    sprintf(score,"%18s%30d\n",pseudo,scoreNombre);
     if (fp == NULL)
     {
         printf("\nLe dossier n'est pas trouvable\n");
@@ -273,10 +270,29 @@ void demandePseudo(){
 void enTeteTableauScore(){
     system("cls");
 
-    printf("\n                    Tableau des scores                   \n\n");
-    printf("---------------------------------------------------------\n\n");
+    printf("\n                      Tableau des scores                    \n\n");
+    printf("------------------------------------------------------------\n");
 }
 
+void tableauScore(){
+    char caractere;
+    FILE* fp;
+    fp = fopen("Score/Score.txt","r");
+
+    if (fp == NULL)
+    {
+        printf("\nLe dossier n'est pas trouvable\n");
+        system("pause");
+        return;
+    }
+    do
+    {
+        caractere = fgetc(fp);
+        printf("%c", caractere);
+    } while (caractere != EOF);
+    fclose(fp);
+    printf("\n\n");
+}
 
 
 
@@ -349,8 +365,8 @@ int main() {
                     system("pause");
                     break;
             case 3:
-
                 enTeteTableauScore();
+                tableauScore();
                 system("pause");
                 break;
             case 4:
