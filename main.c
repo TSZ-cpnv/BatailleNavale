@@ -1,8 +1,85 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <time.h>
 
 char pseudo[15]="Inconnu";
+
+/**
+ * Code pris à Arthur Bottemanne
+ * @return
+ */
+int date()
+{
+    //time_t est un type de variable
+    time_t temps = time(NULL);
+    //on associe la structure de localtime dans la variable t
+    struct tm tm = *localtime(&temps);
+    //on met les valeurs de la date dans une table pour pouvoir plus facilement les retourner
+    int dateEtHeure[] = {tm.tm_mday, tm.tm_mon + 1,tm.tm_year + 1900, tm.tm_hour, tm.tm_min};
+    return (int) dateEtHeure;
+}
+
+/**
+ * Code pris à Arthur Bottemanne
+ * @return
+ */
+void logs(int typeDevenement, int coordonneesVerticalOuScore, int coordonneesH){
+    int *dateEtHeure;
+    char stockageLogs[150];
+    FILE*fichierLogs;
+    fichierLogs= fopen("Logs/Logs.txt","a");
+    if (fichierLogs == NULL)
+    {
+        printf("\nLe dossier n'est pas trouvable\n");
+        system("pause");
+        return;
+    }
+    //insertion des valeurs de date et heure dans la table
+    dateEtHeure = (int *) date();
+    switch (typeDevenement)
+    {
+        //le joueur a commencé une partie
+        case 1:
+            sprintf(stockageLogs,"%s a commencé une partie le %d.%d.%d %d:%d\n\n",pseudo, *(dateEtHeure + 0), *(dateEtHeure + 1), *(dateEtHeure + 2), *(dateEtHeure + 3), *(dateEtHeure + 4));
+            fputs(stockageLogs, fichierLogs);
+            break;
+            //le joueur a tiré
+        case 2:
+            sprintf(stockageLogs, "%s a tiré sur %c;%d le %d.%d.%d %d:%d\n\n", pseudo, coordonneesVerticalOuScore, coordonneesH, *(dateEtHeure + 0), *(dateEtHeure + 1), *(dateEtHeure + 2), *(dateEtHeure + 3), *(dateEtHeure + 4));
+            fputs(stockageLogs, fichierLogs);
+            break;
+            //le joueur a gagné la partie
+        case 3:
+            sprintf(stockageLogs, "%s a gagné avec un score de %d le %d.%d.%d %d:%d\n\n", pseudo, coordonneesVerticalOuScore, *(dateEtHeure + 0), *(dateEtHeure + 1), *(dateEtHeure + 2), *(dateEtHeure + 3), *(dateEtHeure + 4));
+            fputs(stockageLogs, fichierLogs);
+            break;
+            //appelle la fonction pour l'aide
+        case 4:
+            sprintf(stockageLogs,"%s a affiché l'aide le %d.%d.%d %d:%d\n\n",pseudo, *(dateEtHeure + 0), *(dateEtHeure + 1), *(dateEtHeure + 2), *(dateEtHeure + 3), *(dateEtHeure + 4));
+            fputs(stockageLogs, fichierLogs);
+            break;
+            //le joueur appelle la fonction score
+        case 5:
+            sprintf(stockageLogs,"%s a affiché le tableau des scores le %d.%d.%d %d:%d\n\n",pseudo, *(dateEtHeure + 0), *(dateEtHeure + 1), *(dateEtHeure + 2), *(dateEtHeure + 3), *(dateEtHeure + 4));
+            fputs(stockageLogs, fichierLogs);
+            break;
+            //le joueur s'est authentifié
+        case 6:
+            sprintf(stockageLogs,"L'utilisateur s'est nommé %s le %d.%d.%d %d:%d\n\n",pseudo, *(dateEtHeure + 0), *(dateEtHeure + 1), *(dateEtHeure + 2), *(dateEtHeure + 3), *(dateEtHeure + 4));
+            fputs(stockageLogs, fichierLogs);
+            break;
+            //le joueur a quitté le programme
+        case 7:
+            sprintf(stockageLogs,"%s a fermé le programme le %d.%d.%d %d:%d\n\n",pseudo, *(dateEtHeure + 0), *(dateEtHeure + 1), *(dateEtHeure + 2), *(dateEtHeure + 3), *(dateEtHeure + 4));
+            fputs(stockageLogs, fichierLogs);
+            break;
+    }
+    fclose(fichierLogs);
+
+}
+
+
 
 void grille(int x,int y,int tableauBateauxToucher[11][11],int bateaux[11][11]){
 //Déclaration de variable
@@ -239,17 +316,17 @@ void enregistrementDuScoreEtPseudo(int scoreNombre){
     char score[150];
 
 
-    FILE* fp;
-    fp = fopen("Score/Score.txt","a");
+    FILE* fichierScores;
+    fichierScores = fopen("Score/Score.txt", "a");
     sprintf(score,"%18s%30d\n",pseudo,scoreNombre);
-    if (fp == NULL)
+    if (fichierScores == NULL)
     {
         printf("\nLe dossier n'est pas trouvable\n");
         system("pause");
         return;
     }
-    fputs(score,fp);
-    fclose(fp);
+    fputs(score,fichierScores);
+    fclose(fichierScores);
 }
 
 void demandePseudo(){
@@ -297,6 +374,7 @@ void tableauScore(){
 
 
 
+
 int main() {
     //setbuf(stdout,0);
     system("mode con: cols=122 lines=35");
@@ -340,19 +418,22 @@ int main() {
 
         switch (choix) {
                 case 0:
+                    logs(7, (int) NULL, (int) NULL);
                     return 0;
 
                 case 1:
-
+                    logs(1, (int) NULL, (int) NULL);
                     do {
 
                         grille(horizontal, vertical, tableauBateauxToucher,bateaux);
                         vertical = demandeUneCaseVertical();
                         horizontal = demandeUneCaseHorizontal();
+                        logs(2,vertical,horizontal);
                         bateauxToucher = verifieSiToucher(horizontal, vertical, bateauxToucher, tableauBateauxToucher,bateaux);
                     } while (bateauxToucher != 2);
                     score=CalculeScore(score, tableauBateauxToucher,bateaux);
                     gagner();
+                    logs(3, score, (int) NULL);
                     enregistrementDuScoreEtPseudo(score);
                     tableauBateauxToucher[11][11]=reinitialiseLeTableau(tableauBateauxToucher);
 
@@ -360,17 +441,22 @@ int main() {
                     break;
 
                 case 2 :
+                    logs(4, (int) NULL, (int) NULL);
                     Regle();
 
                     system("pause");
                     break;
             case 3:
+
                 enTeteTableauScore();
                 tableauScore();
+                logs(5, (int) NULL, (int) NULL);
                 system("pause");
                 break;
             case 4:
+
                 demandePseudo();
+                logs(6, (int) NULL, (int) NULL);
 
                 break;
             default :
