@@ -60,7 +60,7 @@ void logs(int typeDevenement, int coordonneesVerticalOuScore, int coordonneesH){
             break;
             //le joueur a tiré
         case 2:
-            sprintf(stockageLogs, "%s a tiré sur %c;%d le %d.%d.%d %d:%d\n\n", pseudo, coordonneesVerticalOuScore, coordonneesH, *(dateEtHeure + 0), *(dateEtHeure + 1), *(dateEtHeure + 2), *(dateEtHeure + 3), *(dateEtHeure + 4));
+            sprintf(stockageLogs, "%s a tiré sur %d;%d le %d.%d.%d %d:%d\n\n", pseudo, coordonneesVerticalOuScore, coordonneesH, *(dateEtHeure + 0), *(dateEtHeure + 1), *(dateEtHeure + 2), *(dateEtHeure + 3), *(dateEtHeure + 4));
             fputs(stockageLogs, fichierLogs);
             break;
             //le joueur a gagné la partie
@@ -308,12 +308,12 @@ int verifieSiToucher(int x,int y,int bateauxToucher){
         return  bateauxToucher;
     }
     else if (bateaux[y][x]-48==1){
-        printf("\nToucher ^^\n\n");
+        printf("\nToucher\n\n");
         tableauBateauxToucher[y][x]=2;
         system("pause");
         return  ++bateauxToucher;
     }else{
-        printf("\nPlouf ^^\n\n");
+        printf("\nPlouf\n\n");
         tableauBateauxToucher[y][x]=2;
         system("pause");
         return  bateauxToucher;
@@ -445,9 +445,10 @@ int main() {
                         horizontal = demandeUneCaseHorizontal();
                         logs(2,vertical,horizontal);
                         bateauxToucher = verifieSiToucher(horizontal, vertical, bateauxToucher);
-                    } while (bateauxToucher != 17);
+                    } while (bateauxToucher != 2);
                     score=CalculeScore(score, tableauBateauxToucher);
                     gagner();
+                    bateauxToucher=0;
                     logs(3, score, (int) NULL);
                     enregistrementDuScoreEtPseudo(score);
                     reinitialiseLeTableau();
