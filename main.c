@@ -445,7 +445,7 @@ int main() {
                         horizontal = demandeUneCaseHorizontal();
                         logs(2,vertical,horizontal);
                         bateauxToucher = verifieSiToucher(horizontal, vertical, bateauxToucher);
-                    } while (bateauxToucher != 2);
+                    } while (bateauxToucher != 17);
                     score=CalculeScore(score, tableauBateauxToucher);
                     gagner();
                     bateauxToucher=0;
