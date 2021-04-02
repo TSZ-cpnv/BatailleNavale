@@ -249,16 +249,16 @@ int choixDuMenu()
 void Regle(){
     system("cls");
     printf("Les regles de la bataille navale :\n");
-    printf("\nVous aurez une afficherGrille de 10 sur 10 et vous devrez choisir une case.");
-    printf("\nUne fois une case choisit, le programme lancera un boulet dessus et vous redira si il y a vait un beateau ou non.");
-    printf("\n Si vous toucher un bateaux, il vous raportera 100 points, si vous toucher rien, vous persez 10point.");
-    printf("\n\nPoint important :\n");
-    printf("\nles casse s'afficheron comme ceci : ");
+    printf("\nVous aurez une grille de 10 sur 10 et vous devrez choisir une case.");
+    printf("\nUne fois une case choisit, le programme lancera un boulet dessus et vous redira si il y a avait un bâteau ou non.");
+    printf("\n Si vous touchez un bâteau, il vous raportera 100 points, si vous touchez rien, vous perderez 10 points.");
+    printf("\n\nPoints importants :\n");
+    printf("\nles case s'afficheront comme ceci : ");
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
     printf("█");
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-    printf("\n\nUne fois une case touchée elle pourra s'afficher de 2 façon :\n\n");
-    printf("Si il y avait un bateau sur la case : ");
+    printf("\n\nUne fois une case touchée elle pourra s'afficher de 2 façons :\n\n");
+    printf("Si il y avait un bâteau sur la case : ");
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
     printf("█");
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
@@ -266,7 +266,7 @@ void Regle(){
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
     printf("█");
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-    printf("\n\nLe jeux se terminera une fois tout les bateau seront coullé\n\n");
+    printf("\n\nLe jeux se terminera une fois tout les bâteau seront coulé\n\n");
 
 };
 
@@ -320,9 +320,10 @@ int verifieSiToucher(int x,int y,int bateauxToucher){
     }
 }
 
-void gagner(){
+void gagner(int score){
     system("cls");
     printf("Vous avez gagner, BRAVO !!!\n\n");
+    printf("Votre score est de : %d points\n\n",score);
 }
 
 int CalculeScore(int score,int bateauToucher[11][11]){
@@ -371,7 +372,7 @@ void demandePseudo(){
     do {
         system("cls");
         printf("Entrer votre pseudo :\n");
-        printf("Votre psuedo : ");
+        printf("Votre pseudo : ");
         scanf("%s",&pseudo);
         fflush(stdin);
         printf("\n\nVotre pseudo est %s, Etes vous sur (O/N)\n\n",pseudo);
@@ -447,7 +448,7 @@ int main() {
                         bateauxToucher = verifieSiToucher(horizontal, vertical, bateauxToucher);
                     } while (bateauxToucher != 17);
                     score=CalculeScore(score, tableauBateauxToucher);
-                    gagner();
+                    gagner(score);
                     bateauxToucher=0;
                     logs(3, score, (int) NULL);
                     enregistrementDuScoreEtPseudo(score);
