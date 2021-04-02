@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <time.h>
-
+/**
+ * Declaration des variable global
+ */
 char pseudo[15]="Inconnu";
 
 char bateaux[11][11];
@@ -21,6 +23,7 @@ int tableauBateauxToucher [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
 
 /**
  * Code pris à Arthur Bottemanne
+ * Cette focntion la date l'heure les année les minute
  * @return
  */
 int date()
@@ -36,6 +39,7 @@ int date()
 
 /**
  * Base du code pris a Arthur Bottemanne
+ * Cette fonction enregistre dans un fichier les fait important que l'utilisateur fait
  * @return
  */
 void logs(int typeDevenement, int coordonneesVerticalOuScore, int coordonneesH){
@@ -92,13 +96,18 @@ void logs(int typeDevenement, int coordonneesVerticalOuScore, int coordonneesH){
     fclose(fichierLogs);
 
 }
-
+/**
+ * Cette fonction retourn un nombre au hasard entre 1 et 5 compris
+ * @return
+ */
 int nombreAleatoire(){
     srand(time(NULL));
     int nombreAle=rand() % 5 + 1;
     return nombreAle;
 }
-
+/**
+ * Cette fonction va recuperer une grille (en foncion du numéro tirer au sort dans la fonction "nombreAleatoire) dans un fichier extern
+ */
 void recupererLaGrille(){
 
     char cheminFichier[20];
@@ -116,7 +125,11 @@ void recupererLaGrille(){
     fclose(fichierGrille);
 }
 
-
+/**
+ *
+ * @param x
+ * @param y
+ */
 void afficherGrille(int x, int y){
 //Déclaration de variable
     int lettre=64;
@@ -223,7 +236,9 @@ void afficherGrille(int x, int y){
     printf("\n");
 };
 
-
+/**
+ * Cette fonction affiche le menu
+ */
 void menu()
 {
     printf("0 - Quitter le programme");
@@ -233,7 +248,10 @@ void menu()
     printf("\n4 - Autentification\n\n");
 }
 
-
+/**
+ * Cette donction demande a l'utlisateur dans quelle menu il veut aller
+ * @return
+ */
 int choixDuMenu()
 {
     //Déclaration variable
@@ -245,7 +263,9 @@ int choixDuMenu()
     return choix;
 }
 
-
+/**
+ * Cette fonction affiche les règles
+ */
 void Regle(){
     system("cls");
     printf("Les regles de la bataille navale :\n");
@@ -270,7 +290,10 @@ void Regle(){
 
 };
 
-
+/**
+ * Cette fonction demande une lettre (valeur vertival de la grille) a l'utilisateur
+ * @return
+ */
 int demandeUneCaseVertical(){
     char lettre;
     int chiffre;
@@ -285,7 +308,10 @@ int demandeUneCaseVertical(){
     return chiffre;
 };
 
-
+/**
+ * Cette fonction demande un chiffre (valeur horizontal de la grille) a l'utilisateur
+ * @return
+ */
 int demandeUneCaseHorizontal(){
     int chiffreH;
     printf("\nchoisisez une case (1-10)");
@@ -295,7 +321,13 @@ int demandeUneCaseHorizontal(){
     return chiffreH;
 }
 
-
+/**
+ * Cette fonction indique si la case choissie a un bate, a rie ou est deja touchée
+ * @param x
+ * @param y
+ * @param bateauxToucher
+ * @return
+ */
 int verifieSiToucher(int x,int y,int bateauxToucher){
     if (x<1 || x>10 || y<1 || y>10){
         printf("\ncoordonée invalide\n\n");
@@ -319,13 +351,21 @@ int verifieSiToucher(int x,int y,int bateauxToucher){
         return  bateauxToucher;
     }
 }
-
+/**
+ * Cette fonction affiche lécran quand on gagne avec nos points indiquer
+ * @param score
+ */
 void gagner(int score){
     system("cls");
     printf("Vous avez gagner, BRAVO !!!\n\n");
     printf("Votre score est de : %d points\n\n",score);
 }
-
+/**
+ * Cette fontion sert a calculer le score d'une partie
+ * @param score
+ * @param bateauToucher
+ * @return
+ */
 int CalculeScore(int score,int bateauToucher[11][11]){
 
     for (int j = 0; j < 11; ++j) {
@@ -339,7 +379,9 @@ int CalculeScore(int score,int bateauToucher[11][11]){
     }
     return score;
 }
-
+/**
+ * Cette donction remet a zéro le tableau des bateau qu'on avait touché
+ */
 void reinitialiseLeTableau(){
     for (int j = 0; j < 11; ++j) {
         for (int i = 0; i < 11; ++i) {
@@ -349,7 +391,10 @@ void reinitialiseLeTableau(){
     }
 
 }
-
+/**
+ * Cette fonction enregistre le score et le pseudo de l'utilisateur dans un fichier externe
+ * @param scoreNombre
+ */
 void enregistrementDuScoreEtPseudo(int scoreNombre){
     char score[150];
 
@@ -366,7 +411,9 @@ void enregistrementDuScoreEtPseudo(int scoreNombre){
     fputs(score,fichierScores);
     fclose(fichierScores);
 }
-
+/**
+ * Cette fonction demande a l'utilisateur le pseudo qu'il veut avoir
+ */
 void demandePseudo(){
     int verification;
     do {
@@ -381,14 +428,18 @@ void demandePseudo(){
     } while (verification!=79);
 
 }
-
+/**
+ * Cette fonction affiche l'en-tete du tableau des scores
+ */
 void enTeteTableauScore(){
     system("cls");
 
     printf("\n                      Tableau des scores                    \n\n");
     printf("------------------------------------------------------------\n");
 }
-
+/**
+ * Cette fonction va completer le tableau des scores, elle va chercher dans un fichier externe les score et pseudo enregistrer dedans et les affiche
+ */
 void tableauScore(){
     char caractere;
     FILE* fp;
@@ -412,7 +463,10 @@ void tableauScore(){
 
 
 
-
+/**
+ * Fonction principale ,main, ou on execute toutes les autres fonctions
+ * @return
+ */
 int main() {
     //setbuf(stdout,0);
     system("mode con: cols=122 lines=35");
