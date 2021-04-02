@@ -5,6 +5,20 @@
 
 char pseudo[15]="Inconnu";
 
+char bateaux[11][11];
+
+int tableauBateauxToucher [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
+                                      {0,0,0,0,0,0,0,0,0,0,0},
+                                      {0,0,0,0,0,0,0,0,0,0,0},
+                                      {0,0,0,0,0,0,0,0,0,0,0},
+                                      {0,0,0,0,0,0,0,0,0,0,0},
+                                      {0,0,0,0,0,0,0,0,0,0,0},
+                                      {0,0,0,0,0,0,0,0,0,0,0},
+                                      {0,0,0,0,0,0,0,0,0,0,0},
+                                      {0,0,0,0,0,0,0,0,0,0,0},
+                                      {0,0,0,0,0,0,0,0,0,0,0},
+                                      {0,0,0,0,0,0,0,0,0,0,0}};
+
 /**
  * Code pris à Arthur Bottemanne
  * @return
@@ -21,7 +35,7 @@ int date()
 }
 
 /**
- * Code pris à Arthur Bottemanne
+ * Base du code pris a Arthur Bottemanne
  * @return
  */
 void logs(int typeDevenement, int coordonneesVerticalOuScore, int coordonneesH){
@@ -79,9 +93,31 @@ void logs(int typeDevenement, int coordonneesVerticalOuScore, int coordonneesH){
 
 }
 
+int nombreAleatoire(){
+    srand(time(NULL));
+    int nombreAle=rand() % 5 + 1;
+    return nombreAle;
+}
+
+void recupererLaGrille(){
+
+    char cheminFichier[20];
+    int nombreAle=nombreAleatoire();
+    FILE*fichierGrille;
+    sprintf(cheminFichier,"Grille/%d.txt",nombreAle);
+    fichierGrille=fopen(cheminFichier, "r");
+    if (fichierGrille == NULL)
+    {
+        printf("\nLe dossier n'est pas trouvable\n");
+        system("pause");
+        return;
+    }
+    fgets((char *) bateaux, 122, fichierGrille);
+    fclose(fichierGrille);
+}
 
 
-void grille(int x,int y,int tableauBateauxToucher[11][11],int bateaux[11][11]){
+void afficherGrille(int x, int y){
 //Déclaration de variable
     int lettre=64;
 
@@ -111,11 +147,11 @@ void grille(int x,int y,int tableauBateauxToucher[11][11],int bateaux[11][11]){
     for (int j = 0; j < 11; ++j) {
         printf("\n");
         //2eme ligne
+
         printf("║");
         for (int i = 0; i < 11; ++i) {
-
             if (j==0){
-                if (i==10){          //enelve un espace a ka case num10
+                if (i==10){          //enelve un espace a la case num10
                     printf(" ");
                     printf("%d",i);
 
@@ -129,17 +165,17 @@ void grille(int x,int y,int tableauBateauxToucher[11][11],int bateaux[11][11]){
                     printf(" ");
                 }
             } else{
-                if (j>0 && i== 0){
+                if (j>0 && i == 0){
                     printf(" ");
                     printf("%c",lettre);
                     printf(" ");
-                }else if (tableauBateauxToucher[j][i]==2&&bateaux[j][i]==0){
+                }else if (tableauBateauxToucher[j][i]==2&&bateaux[j][i]==48){
                     printf(" ");
                     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
                     printf("█");
                     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
                     printf(" ");
-                } else if (tableauBateauxToucher[j][i]==2&&bateaux[j][i]==1){
+                } else if (tableauBateauxToucher[j][i]==2&&bateaux[j][i]==49){
                     printf(" ");
                     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
                     printf("█");
@@ -213,7 +249,7 @@ int choixDuMenu()
 void Regle(){
     system("cls");
     printf("Les regles de la bataille navale :\n");
-    printf("\nVous aurez une grille de 10 sur 10 et vous devrez choisir une case.");
+    printf("\nVous aurez une afficherGrille de 10 sur 10 et vous devrez choisir une case.");
     printf("\nUne fois une case choisit, le programme lancera un boulet dessus et vous redira si il y a vait un beateau ou non.");
     printf("\n Si vous toucher un bateaux, il vous raportera 100 points, si vous toucher rien, vous persez 10point.");
     printf("\n\nPoint important :\n");
@@ -260,7 +296,7 @@ int demandeUneCaseHorizontal(){
 }
 
 
-int verifieSiToucher(int x,int y,int bateauxToucher,int tableauBateauxToucher[11][11],int bateaux[11][11]){
+int verifieSiToucher(int x,int y,int bateauxToucher){
     if (x<1 || x>10 || y<1 || y>10){
         printf("\ncoordonée invalide\n\n");
         system("pause");
@@ -271,7 +307,7 @@ int verifieSiToucher(int x,int y,int bateauxToucher,int tableauBateauxToucher[11
         system("pause");
         return  bateauxToucher;
     }
-    else if (bateaux[y][x]==1){
+    else if (bateaux[y][x]-48==1){
         printf("\nToucher ^^\n\n");
         tableauBateauxToucher[y][x]=2;
         system("pause");
@@ -289,13 +325,13 @@ void gagner(){
     printf("Vous avez gagner, BRAVO !!!\n\n");
 }
 
-int CalculeScore(int score,int bateauToucher[11][11],int bateaux[11][11]){
+int CalculeScore(int score,int bateauToucher[11][11]){
 
     for (int j = 0; j < 11; ++j) {
         for (int i = 0; i < 11; ++i) {
-            if (bateauToucher[j][i]==2 && bateaux[j][i]==1){
+            if (bateauToucher[j][i]==2 && bateaux[j][i]-48==1){
                 score=(score+100);
-            }else if(bateauToucher[j][i]==2 && bateaux[j][i]==0){
+            }else if(bateauToucher[j][i]==2 && bateaux[j][i]-48==0){
                 score=(score-10);
             }
         }
@@ -303,13 +339,14 @@ int CalculeScore(int score,int bateauToucher[11][11],int bateaux[11][11]){
     return score;
 }
 
-int reinitialiseLeTableau(int tableauToucher[11][11]){
+void reinitialiseLeTableau(){
     for (int j = 0; j < 11; ++j) {
         for (int i = 0; i < 11; ++i) {
-            tableauToucher[i][j]=0;
+            tableauBateauxToucher[i][j]=0;
         }
+
     }
-    return tableauToucher[11][11];
+
 }
 
 void enregistrementDuScoreEtPseudo(int scoreNombre){
@@ -387,29 +424,6 @@ int main() {
     int score=0;
 
 
-    int bateaux [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
-                            {0,0,1,0,0,0,0,0,0,0,0},
-                            {0,0,1,0,0,0,0,0,0,0,0},
-                            {0,0,1,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0,1,0,0},
-                            {0,0,1,1,0,0,0,0,1,0,0},
-                            {0,0,0,0,0,0,0,0,1,0,0},
-                            {0,0,1,0,0,0,0,0,1,0,0},
-                            {0,0,1,0,0,0,0,0,0,0,0},
-                            {0,0,1,1,1,1,1,1,0,0,0},
-                            {0,0,0,0,0,0,0,0,0,0,0}};
-    int tableauBateauxToucher [11][11] = {{0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0},
-                                          {0,0,0,0,0,0,0,0,0,0,0}};
-
     do {
         system("cls");
         menu();
@@ -422,20 +436,21 @@ int main() {
                     return 0;
 
                 case 1:
+                    recupererLaGrille();
                     logs(1, (int) NULL, (int) NULL);
                     do {
 
-                        grille(horizontal, vertical, tableauBateauxToucher,bateaux);
+                        afficherGrille(horizontal, vertical);
                         vertical = demandeUneCaseVertical();
                         horizontal = demandeUneCaseHorizontal();
                         logs(2,vertical,horizontal);
-                        bateauxToucher = verifieSiToucher(horizontal, vertical, bateauxToucher, tableauBateauxToucher,bateaux);
-                    } while (bateauxToucher != 2);
-                    score=CalculeScore(score, tableauBateauxToucher,bateaux);
+                        bateauxToucher = verifieSiToucher(horizontal, vertical, bateauxToucher);
+                    } while (bateauxToucher != 17);
+                    score=CalculeScore(score, tableauBateauxToucher);
                     gagner();
                     logs(3, score, (int) NULL);
                     enregistrementDuScoreEtPseudo(score);
-                    tableauBateauxToucher[11][11]=reinitialiseLeTableau(tableauBateauxToucher);
+                    reinitialiseLeTableau();
 
                     system("pause");
                     break;
